@@ -1,4 +1,3 @@
-import { ApiInterceptor } from './interceptor/api.interceptor';
 // Angular Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,9 +12,7 @@ import { AppRoutingModule, RoutingComponents } from './app-routing.module';
 
 // App Component
 import { AppComponent } from './app.component';
-import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { ContactCardComponent } from './home/contact-card/contact-card.component';
 
 // Services
 import { ContactsService } from './services/contacts.service';
@@ -23,13 +20,14 @@ import { AddressesService } from './services/addresses.service';
 import { CountriesService } from './services/countries.service';
 import { ContactListItemComponent } from './contacts/contact-list-item/contact-list-item.component';
 import { ContactComponent } from './contact/contact.component';
+
+// Interceptors
+import { ApiInterceptor } from './interceptor/api.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
     RoutingComponents,
-    FooterComponent,
     HeaderComponent,
-    ContactCardComponent,
     ContactListItemComponent,
     ContactComponent
   ],
