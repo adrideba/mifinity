@@ -1,0 +1,118 @@
+<div class="row" *ngIf="contact">
+  <div class="col-md-4">
+    <img
+      [src]="contact.avatar"
+      class="avatar-badge"
+      [alt]="contact.first_name"
+      onerror="this.src='../assets/img/default.jpg'"
+    />
+    <h4 class="mt-3 edit-contact-title">
+      {{ contact.first_name }} {{ contact.last_name }}
+    </h4>
+  </div>
+</div>
+<div class="row" *ngIf="contact">
+  <form [formGroup]="contactForm">
+    <div
+      class="col-md-4 mt-3 address-container"
+      formArrayName="addresses"
+      *ngFor="
+        let address of contactForm.controls.addresses.controls;
+        let i = index
+      "
+    >
+      <div [formGroupName]="i" class="mt-2" *ngIf="address.value.state !== 2">
+        <p>
+          <strong>Address #{{ i + 1 }}</strong>
+          <i class="fa fa-trash delete-contact" (click)="deleteAddress(i)"></i>
+        </p>
+
+        <div class="form-group">
+          <label for="street1">Street 1</label>
+          <input
+            type="text"
+            class="form-control"
+            id="{{ 'street1' + i }}"
+            formControlName="street1"
+          />
+          <small
+            *ngIf="
+              addresses.controls[i].get('street1').errors?.required &&
+              isValidFormSubmitted != null &&
+              !isValidFormSubmitted
+            "
+            class="text-danger"
+          >
+            Street 1 cannot be empty
+          </small>
+        </div>
+        <div class="form-group mt-3">
+          <label for="street2">Street 2</label>
+          <input
+            type="text"
+            class="form-control"
+            id="{{ 'street2' + i }}"
+            formControlName="street2"
+          />
+          <small
+            *ngIf="
+              addresses.controls[i].get('street2').errors?.required &&
+              isValidFormSubmitted != null &&
+              !isValidFormSubmitted
+            "
+            class="text-danger"
+          >
+            Street 2 cannot be empty
+          </small>
+        </div>
+        <div class="form-group mt-3">
+          <label for="town">Town</label>
+          <input
+            type="text"
+            class="form-control"
+            id="{{ 'town' + i }}"
+            formControlName="town"
+          />
+          <small
+            *ngIf="
+              addresses.controls[i].get('town').errors?.required &&
+              isValidFormSubmitted != null &&
+              !isValidFormSubmitted
+            "
+            class="text-danger"
+          >
+            Town cannot be empty
+          </small>
+        </div>
+        <div class="form-group mt-3">
+          <label for="town">Country</label>
+          <select
+            class="form-control"
+            id="{{ 'country' + i }}"
+            formControlName="country"
+          >
+            <option *ngFor="let country of countries" [value]="country.iso2">
+              {{ country.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary" (click)="addAddress()">
+            <i class="fa fa-plus"></i> Add Address
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary save-address-button"
+            (click)="saveAddress(contactForm.value, contactForm.valid)"
+          >
+            <i class="fa fa-save"></i> Save Address
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

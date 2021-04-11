@@ -1,0 +1,12 @@
+<div *ngIf="contact">
+  <img
+    [src]="contact.avatar"
+    class="avatar-badge"
+    [alt]="contact.first_name"
+    onerror="this.src='../assets/img/default.jpg'"
+  />
+  <a [routerLink]="['/contacts/' + contact.id]" class="contact-list-link"
+    >{{ contact.first_name }} {{ contact.last_name }}</a
+  >
+  <i class="fa fa-trash delete-contact" (click)="deleteContact(contact.id)"></i>
+</div>
