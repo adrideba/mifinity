@@ -5,7 +5,7 @@ import { Countries } from './../models/countries';
 import { CountriesService } from './../services/countries.service';
 import { Contacts } from './../models/contacts';
 import { ContactsService } from './../services/contacts.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -16,8 +16,12 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
+  contactSubscription: Subscription;
+  addressesSubscription: Subscription;
+  countriesSubscription: Subscription;
+
   contact: Contacts;
   countries: Countries[];
   contactForm: FormGroup;
@@ -143,6 +147,24 @@ export class ContactComponent implements OnInit {
       });
     } else {
       this.addresses.removeAt(id);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+
+    if (this.contactSubscription) {
+      this.contactSubscription.unsubscribe();
+    }
+
+    if (this.countriesSubscription) {
+      this.countriesSubscription.unsubscribe();
+    }
+
+    if (this.addressesSubscription) {
+      this.addressesSubscription.unsubscribe();
     }
   }
 }
